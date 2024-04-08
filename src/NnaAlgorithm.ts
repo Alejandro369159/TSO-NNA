@@ -75,7 +75,7 @@ function insertFirstNodeRelation(
   trip.push(...[firstPath.from, firstPath.to]);
 }
 
-function selectRestOfNearestNeighboors(matrix: MatrixNode[]) {
+function selectRestOfNearestneighbors(matrix: MatrixNode[]) {
   while (trip.length < matrix.length) {
     const lastNodeInTrip = matrix.find(
       (node) => node.id === trip[trip.length - 1]
@@ -84,23 +84,23 @@ function selectRestOfNearestNeighboors(matrix: MatrixNode[]) {
     let options = lastNodeInTrip.relations.filter(
       (relation) => !trip.includes(relation.toId)
     );
-    let closestNeighboor = options[0];
+    let closestneighbor = options[0];
     if (options.length === 1) {
-      trip.push(closestNeighboor.toId);
-      totalCost += closestNeighboor.distance;
+      trip.push(closestneighbor.toId);
+      totalCost += closestneighbor.distance;
       break;
     }
-    if (!closestNeighboor) throw new Error();
+    if (!closestneighbor) throw new Error();
     for (let relation of options) {
       if (
-        relation.distance < closestNeighboor.distance &&
+        relation.distance < closestneighbor.distance &&
         !trip.includes(relation.toId)
       ) {
-        closestNeighboor = relation;
+        closestneighbor = relation;
       }
     }
-    trip.push(closestNeighboor.toId);
-    totalCost += closestNeighboor.distance;
+    trip.push(closestneighbor.toId);
+    totalCost += closestneighbor.distance;
   }
 }
 
@@ -126,7 +126,7 @@ async function calculateTrip(testNumber: "firstTest" | "secondTest") {
   insertFirstNodeRelation(matrix, testNumber);
 
   // We iterate over the rest of nodes to place them by nearest neightboor
-  selectRestOfNearestNeighboors(matrix);
+  selectRestOfNearestneighbors(matrix);
   // Result
   return { trip: trip, cost: totalCost };
 }

@@ -110,29 +110,29 @@ function insertFirstNodeRelation(matrix, testNumber) {
             : { from: closestRelation.toId, to: selectedNode.id };
     trip.push.apply(trip, [firstPath.from, firstPath.to]);
 }
-function selectRestOfNearestNeighboors(matrix) {
+function selectRestOfNearestneighbors(matrix) {
     while (trip.length < matrix.length) {
         var lastNodeInTrip = matrix.find(function (node) { return node.id === trip[trip.length - 1]; });
         if (!lastNodeInTrip)
             break;
         var options = lastNodeInTrip.relations.filter(function (relation) { return !trip.includes(relation.toId); });
-        var closestNeighboor = options[0];
+        var closestneighbor = options[0];
         if (options.length === 1) {
-            trip.push(closestNeighboor.toId);
-            totalCost += closestNeighboor.distance;
+            trip.push(closestneighbor.toId);
+            totalCost += closestneighbor.distance;
             break;
         }
-        if (!closestNeighboor)
+        if (!closestneighbor)
             throw new Error();
         for (var _i = 0, options_1 = options; _i < options_1.length; _i++) {
             var relation = options_1[_i];
-            if (relation.distance < closestNeighboor.distance &&
+            if (relation.distance < closestneighbor.distance &&
                 !trip.includes(relation.toId)) {
-                closestNeighboor = relation;
+                closestneighbor = relation;
             }
         }
-        trip.push(closestNeighboor.toId);
-        totalCost += closestNeighboor.distance;
+        trip.push(closestneighbor.toId);
+        totalCost += closestneighbor.distance;
     }
 }
 // Process for calculating a trip with its cost
@@ -163,7 +163,7 @@ function calculateTrip(testNumber) {
                     // We grab the cheapest relation of two nodes
                     insertFirstNodeRelation(matrix, testNumber);
                     // We iterate over the rest of nodes to place them by nearest neightboor
-                    selectRestOfNearestNeighboors(matrix);
+                    selectRestOfNearestneighbors(matrix);
                     // Result
                     return [2 /*return*/, { trip: trip, cost: totalCost }];
             }
